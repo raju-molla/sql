@@ -1,0 +1,106 @@
+CREATE TABLE Admin_R(
+    Aid number,
+    adminName varchar(30),
+    userName varchar(20),
+    adminPassword varchar(30),
+    enrollID number,
+    addcourseId number,
+    PRIMARY KEY (Aid),
+    foreign key(enrollID) references Enroll(enrollID),
+    foreign key(addcourseId) references AddCourse(addcourseId) 
+);
+INSERT INTO Admin_R VALUES(1, 'RajuMolla', 'admin1', '123', '9991','50001');
+select * from Admin_R;
+select * from Admin_R ORDER BY enrollID;
+
+
+
+CREATE TABLE Teacher(
+    tId number not null primary key,
+    teacherName varchar(30),
+    Education varchar(50),
+    courseId number,
+    foreign key(courseId) references Course(courseId)  
+);
+INSERT INTO Teacher VALUES(1501, 'durjay', 'BSc. in CSE', 101);
+INSERT INTO Teacher VALUES(1502, 'Mala', 'MSC', 102);
+INSERT INTO Teacher VALUES(1503, 'farjana', 'Phd', 103);
+
+select * from Teacher;
+drop table Teacher;
+
+
+CREATE TABLE Course (
+    courseId number,
+    courseName varchar(30),
+    frees varchar(50),
+    duation varchar(20), 
+    PRIMARY KEY (courseId)
+);
+
+INSERT INTO Course VALUES(101, 'javascript', '2000', '4 month');
+INSERT INTO Course VALUES(102, 'TypeScript', '1000', '2 month');
+INSERT INTO Course VALUES(103, 'DSA', '5000', '8 month');
+
+select * from Course;
+SELECT * FROM Course WHERE frees>1000;
+
+delete from Course where courseId=1;
+
+CREATE TABLE Student (
+    s_id number not null primary key,
+    studentName varchar(30),
+    EducaitonalDetails varchar(50),
+    PersonalDetails varchar(50),
+    freesDetails varchar(15),
+    courseId number,
+    foreign key(courseId) references Course(courseId)
+
+);
+INSERT INTO Student VALUES(18340001, 'Raju', 'HSC- 5, SSC- 5', 'Bangladeshi, turkey series lover', 'Complete', 101);
+INSERT INTO Student VALUES(183400025, 'Farjana', 'HSC- 4, SSC- 5', 'Pabana, hindi love story lover', 'Complete', 102);
+INSERT INTO Student VALUES(183400035, 'sajid', 'HSC- 3, SSC- 5', 'Manikganj, facebook lover', 'Complete', 102);
+INSERT INTO Student VALUES(183400055, 'kajol', 'HSC- 3, SSC- 5', 'dhaka, married', 'Incomplete', 103);
+
+SELECT * FROM Student WHERE courseId >101;
+
+select * from Student;
+drop table Student;
+
+
+
+CREATE TABLE Enroll(
+    enrollID number not null primary key,
+    courseId number,
+    s_id number,
+    foreign key(courseId) references Course(courseId),
+    foreign key(s_id) references Student(s_id)
+);
+INSERT INTO Enroll VALUES(9991,101,18340001);
+INSERT INTO Enroll VALUES(9992,102,183400025);
+INSERT INTO Enroll VALUES(9993,102,183400035);
+
+select * from Enroll;
+drop table Enroll;
+
+CREATE TABLE AddCourse(
+    addcourseId number not null primary key,
+    tId number,
+    courseId number,
+    foreign key(tId) references Teacher(tId),
+    foreign key(courseId) references Course(courseId)
+);
+
+INSERT INTO AddCourse VALUES(50001,1501,101);
+INSERT INTO AddCourse VALUES(50002,1502,102);
+select * from AddCourse;
+
+
+
+
+
+
+
+
+
+
